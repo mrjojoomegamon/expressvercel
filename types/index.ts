@@ -5,11 +5,18 @@ export interface ProductCategory {
   parentId?: string
 }
 
+// ACTUALIZADA: Interface de producto con nuevos campos de precio
 export interface Product {
   id: string
   name: string
   description: string
-  price: number
+  regular_price: number // NUEVO: Precio normal
+  sale_price?: number // NUEVO: Precio de oferta (opcional)
+  is_on_sale: boolean // NUEVO: Indica si está en oferta
+  mercado_libre_url: string // NUEVO: URL de MercadoLibre
+  display_price: number // CALCULADO: Precio a mostrar
+  discount_percentage: number // CALCULADO: Porcentaje de descuento
+  savings_amount: number // CALCULADO: Cantidad de ahorro
   imageUrl: string
   images?: string[]
   rating: number
@@ -56,6 +63,7 @@ export interface WishlistItem {
   createdAt: string
 }
 
+// ACTUALIZADA: Filtros con nuevo campo isOnSale
 export interface ProductFilters {
   page?: number
   limit?: number
@@ -69,6 +77,7 @@ export interface ProductFilters {
   isFeatured?: boolean
   isTopPick?: boolean
   isActive?: boolean
+  isOnSale?: boolean // NUEVO: Filtrar por productos en oferta
 }
 
 export interface PaginationInfo {
@@ -86,3 +95,26 @@ export interface FilterInfo {
   availableBrands: Array<{ name: string; count: number }>
   priceRange: { min: number; max: number }
 }
+
+// NUEVA: Interface para crear/actualizar productos
+export interface CreateProductRequest {
+  name: string
+  description: string
+  regular_price: number
+  sale_price?: number
+  is_on_sale?: boolean
+  mercado_libre_url: string
+  image_url: string
+  images?: string[]
+  alt_text: string
+  category: { id: string } | string
+  brand: string
+  sku: string
+  stock?: number
+  is_active?: boolean
+  is_featured?: boolean
+  is_top_pick?: boolean
+  specifications?: Record<string, any>
+}
+
+export interface UpdateProductRequest extends Partial<CreateProductRequest> {}

@@ -6,6 +6,10 @@ import { productController } from "../controllers/productController.js"
 // --------------------------------------------------
 const productRoutes = Router()
 
+// NUEVO: Endpoint específico para productos en oferta (debe ir antes de /:id)
+productRoutes.get("/on-sale", productController.getOnSale)
+
+// Endpoints existentes
 productRoutes.get("/", productController.getAll)
 productRoutes.get("/:id", productController.getById)
 productRoutes.post("/", productController.create)
